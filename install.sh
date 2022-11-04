@@ -24,10 +24,10 @@ genfstab -U /mnt >> /mnt/etc/fstab
 echo "Enabling parallel downloads"
 sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownloads = 10\nILoveCandy/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' -i /mnt/etc/pacman.conf
 
-cp ./post /mnt/root/
-
 echo "Chrooting into /mnt"
 echo "run 'cd && ./post'"
 cp ./post /mnt/root/
 cp ./postpost /mnt/root
+chmod +x /mnt/root/post
+chmod +x /mnt/root/postpost
 arch-chroot /mnt

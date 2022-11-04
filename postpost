@@ -15,10 +15,6 @@ while read p; do
     paru -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
-echo "Symlinking /bin/sh to dash"
-sudo rm -rf /bin/sh 
-sudo ln -s $(which dash) /bin/sh
-
 echo "Installing advanced cp and mv"
 git clone https://github.com/jarun/advcpmv
 cd ./advcpmv
@@ -34,4 +30,5 @@ cd /home/$username/.config
 sudo cp env /etc/zsh/zshenv
 
 echo "run 'umount -l /mnt && reboot'"
-exit && exit
+echo "run 'exit && reboot'"
+exit

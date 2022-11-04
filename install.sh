@@ -25,4 +25,4 @@ echo "Enabling parallel downloads"
 sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownloads = 10\nILoveCandy/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' -i /mnt/etc/pacman.conf
 
 echo "Chrooting into /mnt"
-arch-chroot /mnt sh post
+arch-chroot /mnt sh ./post

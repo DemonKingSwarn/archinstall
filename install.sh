@@ -28,4 +28,6 @@ cp ./post /mnt/root/
 
 echo "Chrooting into /mnt"
 echo "run 'cd && ./post'"
+cp ./post /mnt/root/
+cp ./postpost /mnt/root
 arch-chroot /mnt

@@ -14,11 +14,12 @@ while read p; do
 done < /home/$username/pkgs.txt
 
 echo "Symlinking /bin/sh to dash"
-sudo rm -rf /bin/sh && sudo ln -s $(which dash) /bin/sh
+sudo rm -rf /bin/sh 
+sudo ln -s $(which dash) /bin/sh
 
 echo "Installing advanced cp and mv"
 git clone https://github.com/jarun/advcpmv
-cd advcpmv
+cd ./advcpmv
 sh ./install.sh
 sudo mv ./advcp /usr/local/bin/cpg
 sudo mv ./advmv /usr/local/bin/mvg

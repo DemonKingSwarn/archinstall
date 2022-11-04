@@ -1,5 +1,7 @@
 #!/bin/sh
 
+username=$(whoami)
+
 cd /home/$username
 
 git clone https://aur.archlinux.org/paru-bin

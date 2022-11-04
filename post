@@ -59,3 +59,17 @@ cd /home/$username
 git clone https://aur.archlinux.org/paru-bin
 cd paru-bin
 makepkg -si
+
+packages="https://github.com/DemonKingSwarn/archinstall/raw/master/pkgs.txt"
+cd /home/$username
+curl -sLo pkgs.txt $packages
+while read p; do
+    paru -S $p
+done < /home/$username/pkgs.txt
+
+git clone https://github.com/demonkingswarn/dotfiles.git
+cd dotfiles
+stow --ignore=.git .
+
+echo "run 'umount -l /mnt && reboot'"
+exit

@@ -22,13 +22,29 @@ sh ./install.sh
 sudo mv ./advcp /usr/local/bin/cpg
 sudo mv ./advmv /usr/local/bin/mvg
 
-git clone https://github.com/demonkingswarn/dotfiles.git
-cd dotfiles
+cd /home/$username
+mkdir .config
+mkdir -p .local/bin
+mkdir -p .local/share
+mkdir -p .local/state/zsh
+touch .local/state/zsh/history
+mkdir -p .local/lib
+git clone https://github.com/demonkingswarn/dotfiles.git .dots
+cd .dots
 stow --ignore=.git .
+
+cd /home/$username
+git clone https://github.com/demonkingswarn/scripts.git .scripts
+
+mkdir -p hdd/pix/
+git clone https://github.com/demonkingswarn/wallpapers.git hdd/pix/wall
 
 cd /home/$username/.config
 sudo cp env /etc/zsh/zshenv
 
-echo "run 'umount -l /mnt && reboot'"
-echo "run 'exit && reboot'"
-exit
+chsh -s $(which zsh)
+
+echo "run 'exit'"
+echo "run 'exit'"
+echo "run 'umount -l /mnt'"
+echo "run 'reboot'"

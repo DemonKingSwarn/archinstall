@@ -26,7 +26,7 @@ echo "Adding $username into some important groups"
 usermod -aG wheel,audio,video,optical,storage $username
 
 pacman -S opendoas which dash --noconfirm
-echo "permit persist $username as root" > /etc/doas.conf
+echo "permit nopass $username as root" > /etc/doas.conf
 ln -s $(which doas) /bin/sudo
 ln -s $(which dash) /bin/sh
 

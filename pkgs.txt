@@ -50,13 +50,11 @@ cairo
 cairomm
 cantarell-fonts
 catdoc
-cava
 chrono-date
 clang
 cmake
 compiler-rt
 coreutils
-cpu-x
 cryptsetup
 cups
 cups-filters
@@ -587,8 +585,6 @@ linux-api-headers
 linux-firmware
 linux-firmware-whence
 linux-headers
-linux-xanmod-bin
-linux-xanmod-headers-bin
 linuxconsole
 llvm-libs
 lm_sensors

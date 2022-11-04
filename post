@@ -1,0 +1,61 @@
+#!/bin/sh
+
+ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+
+hwclock --systohc
+
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
+
+printf "Enter the hostname: " && read hostname
+echo "$hostname" > /etc/hostname
+
+echo "127.0.0.1     localhost" >> /etc/hosts
+echo "::1           localhost" >> /etc/hosts
+echo "127.0.1.1     $hostname.localdomain   $hostname" >> /etc/hosts
+
+echo "Set the root password"
+passwd
+
+printf "Enter the username: " && read username
+useradd -m $username
+echo "Enter your $username's password: "
+passwd $username
+
+echo "Adding $username into some important groups"
+usermod -aG wheel,audio,video,optical,storage $username
+
+pacman -S opendoas which
+echo "permit persist $username as root" > /etc/doas.conf
+ln -s $(which doas) /bin/sudo
+
+printf "%s\n" "Adding demonos repo"
+
+echo "[dystopia]" >> /etc/pacman.conf
+echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
+echo "Server = https://github.com/DemonKingSwarn/\$repo/raw/master/\$arch" >> /etc/pacman.conf
+
+echo "[multilib]" >> /etc/pacman.conf
+echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
+
+pacman -S grub networkmanager efibootmgr dosfstools os-prober mtools
+
+mkdir /boot/EFI
+lsblk
+printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
+mount /dev/$bootDrive /boot/EFI
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
+
+systemctl enable NetworkManager
+systemctl start NetworkManager
+
+pacman -S git fakeroot
+
+su $username
+
+cd /home/$username
+
+git clone https://aur.archlinux.org/paru-bin
+cd paru-bin
+makepkg -si

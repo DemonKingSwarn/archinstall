@@ -38,6 +38,8 @@ echo "Server = https://github.com/DemonKingSwarn/\$repo/raw/master/\$arch" >> /e
 echo "[multilib]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
+pacman -Sy
+
 pacman -S grub networkmanager efibootmgr dosfstools os-prober mtools --noconfirm
 
 mkdir /boot/EFI

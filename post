@@ -71,5 +71,8 @@ git clone https://github.com/demonkingswarn/dotfiles.git
 cd dotfiles
 stow --ignore=.git .
 
+cd /home/$username/.config
+sudo cp env /etc/zsh/zshenv
+
 echo "run 'umount -l /mnt && reboot'"
 exit

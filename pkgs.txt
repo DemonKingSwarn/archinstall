@@ -580,11 +580,6 @@ libyuv
 libzip
 licenses
 lilv
-linux
-linux-api-headers
-linux-firmware
-linux-firmware-whence
-linux-headers
 linuxconsole
 llvm-libs
 lm_sensors

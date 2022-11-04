@@ -67,6 +67,13 @@ while read p; do
     paru -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
+echo "Installing advanced cp and mv"
+git clone https://github.com/jarun/advcpmv
+cd advcpmv
+sh ./install.sh
+sudo mv ./advcp /usr/local/bin/cpg
+sudo mv ./advmv /usr/local/bin/mvg
+
 git clone https://github.com/demonkingswarn/dotfiles.git
 cd dotfiles
 stow --ignore=.git .

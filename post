@@ -25,7 +25,7 @@ passwd $username
 echo "Adding $username into some important groups"
 usermod -aG wheel,audio,video,optical,storage $username
 
-pacman -S opendoas which
+pacman -S opendoas which --noconfirm
 echo "permit persist $username as root" > /etc/doas.conf
 ln -s $(which doas) /bin/sudo
 
@@ -38,7 +38,7 @@ echo "Server = https://github.com/DemonKingSwarn/\$repo/raw/master/\$arch" >> /e
 echo "[multilib]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
-pacman -S grub networkmanager efibootmgr dosfstools os-prober mtools
+pacman -S grub networkmanager efibootmgr dosfstools os-prober mtools --noconfirm
 
 mkdir /boot/EFI
 lsblk
@@ -50,7 +50,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-pacman -S git fakeroot
+pacman -S git fakeroot --noconfirm
 
 su $username
 
@@ -64,7 +64,7 @@ packages="https://github.com/DemonKingSwarn/archinstall/raw/master/pkgs.txt"
 cd /home/$username
 curl -sLo pkgs.txt $packages
 while read p; do
-    paru -S $p
+    paru -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
 git clone https://github.com/demonkingswarn/dotfiles.git

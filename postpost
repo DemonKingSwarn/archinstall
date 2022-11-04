@@ -1,0 +1,34 @@
+#!/bin/sh
+
+cd /home/$username
+
+git clone https://aur.archlinux.org/paru-bin
+cd paru-bin
+makepkg -si
+
+packages="https://github.com/DemonKingSwarn/archinstall/raw/master/pkgs.txt"
+cd /home/$username
+curl -sLo pkgs.txt $packages
+while read p; do
+    paru -S $p --noconfirm
+done < /home/$username/pkgs.txt
+
+echo "Symlinking /bin/sh to dash"
+sudo rm -rf /bin/sh && sudo ln -s $(which dash) /bin/sh
+
+echo "Installing advanced cp and mv"
+git clone https://github.com/jarun/advcpmv
+cd advcpmv
+sh ./install.sh
+sudo mv ./advcp /usr/local/bin/cpg
+sudo mv ./advmv /usr/local/bin/mvg
+
+git clone https://github.com/demonkingswarn/dotfiles.git
+cd dotfiles
+stow --ignore=.git .
+
+cd /home/$username/.config
+sudo cp env /etc/zsh/zshenv
+
+echo "run 'umount -l /mnt && reboot'"
+exit && exit

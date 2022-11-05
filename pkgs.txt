@@ -347,7 +347,6 @@ lib32-ncurses
 lib32-nettle
 lib32-nspr
 lib32-nss
-lib32-nvidia-utils
 lib32-ocl-icd
 lib32-openal
 lib32-openssl
@@ -641,10 +640,6 @@ nspr
 nss
 nsxiv
 ntfs-3g
-nvidia-dkms
-nvidia-prime
-nvidia-settings
-nvidia-utils
 oath-toolkit
 obs-studio
 ocl-icd

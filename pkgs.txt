@@ -671,7 +671,6 @@ pamixer
 pango
 pangomm
 parted
-paru-bin
 pass
 pass-otp
 patch

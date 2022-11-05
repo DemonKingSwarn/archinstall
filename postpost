@@ -16,25 +16,31 @@ while read p; do
 done < /home/$username/pkgs.txt
 
 proc_type=$(lscpu)
-if [ grep -E "GenuineIntel" <<< ${proc_type} ] ; then
+intel_proc=$(echo "${proc_type}" | grep -E "GenuineIntel")
+amd_proc=$(echo "${proc_type}" | grep -E "AuthenticAMD")
+if [ ${intel_proc} ] ; then
     echo "Installing Intel Microcode"
     paru -S --noconfirm --needed intel-ucode
     proc_ucode=intel-ucode.img
-elif [ grep -E "AuthenticAMD" <<< ${proc_type} ] ; then
+elif [ ${amd_proc} ] ; then
     echo "Installing AMD Microcode"
     paru -S --noconfirm --needed amd-ucode
     proc_ucode=amd-ucode.img
 fi
 
 gpu_type=$(lspci)
-if [ grep -E "NVIDIA|GeForce" <<< ${gpu_type} ] ; then
+nvidia_gpu=$(echo "$gpu_type" | grep -E "NVIDIA|GeForce")
+amd_gpu=$(lspci | grep 'VGA' | grep -E "Radeon|AMD")
+integrated_gpu=$(echo $gpu_type | grep -E "Integrated Graphics Controller")
+intel_gpu=$(echo $gpu_type | grep -E "Intel Corporation UHD")
+if [ $nvidia_gpu ] ; then
     paru -S --noconfirm --needed nvidia-open nvidia-prime nvidia-settings nvidia-utils
     nvidia-xconfig
-elif [ lspci | grep 'VGA' | grep -E "Radeon|AMD" ] ; then
+elif [ $amd_gpu ] ; then
     paru -S --noconfirm --needed xf86-video-amdgpu
-elif [ grep -E "Integrated Graphics Controller" <<< ${gpu_type} ] ; then
+elif [  $integrated_gpu ] ; then
     paru -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
-elif [ grep -E "Intel Corporation UHD" <<< ${gpu_type} ] ; then
+elif [ $intel_gpu ] ; then
     paru -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
 fi
 

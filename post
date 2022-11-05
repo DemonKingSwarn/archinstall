@@ -47,9 +47,10 @@ mkdir /boot/EFI
 lsblk
 printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
 mount /dev/$bootDrive /boot/EFI
+echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 
 if [ ! -d "/sys/firmware/efi" ]; then
-    grub-install --boot-directory=/boot /dev/$bootDrive
+    grub-install --boot-directory=/boot --force /dev/$bootDrive
 else
     grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 fi

@@ -36,7 +36,7 @@ echo "[dystopia]" >> /etc/pacman.conf
 echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
 echo "Server = https://github.com/DemonKingSwarn/\$repo/raw/master/\$arch" >> /etc/pacman.conf
 
-echo "\n[multilib]" >> /etc/pacman.conf
+echo "[multilib]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
 pacman -Syyu
@@ -65,7 +65,7 @@ pacman-key --recv-key FBA220DFC880C036 --keyserver keyserver.ubuntu.com
 pacman-key --lsign-key FBA220DFC880C036
 pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
 
-echo "\n[chaotic-aur]" >> /etc/pacman.conf
+echo "[chaotic-aur]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf
 
 pacman -Syyu

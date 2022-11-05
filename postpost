@@ -57,6 +57,7 @@ touch .local/state/zsh/history
 mkdir -p .local/lib
 git clone https://github.com/demonkingswarn/dotfiles.git .dots
 cd .dots
+rm ~/.bashrc
 stow --ignore=.git .
 
 cd /home/$username

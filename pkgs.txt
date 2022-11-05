@@ -362,7 +362,6 @@ lib32-polkit
 lib32-sdl2
 lib32-sdl2_image
 lib32-sqlite
-lib32-systemd
 lib32-tdb
 lib32-util-linux
 lib32-v4l-utils
@@ -836,9 +835,6 @@ swaylock
 sxhkd
 sysfsutils
 system-config-printer
-systemd
-systemd-libs
-systemd-sysvcompat
 taglib
 tar
 tdb

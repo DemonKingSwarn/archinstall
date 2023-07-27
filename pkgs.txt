@@ -1,3 +1,10 @@
+wayland
+wayland-protocols
+wl-clipboard
+xorg-xwayland
+wlroots
+qt5-wayland
+qt6-wayland
 aalib
 acl
 acpi
@@ -197,7 +204,14 @@ http-parser
 hwdata
 hwloc
 hyphen
+xdg-desktop-portal
+xdg-desktop-portal-hyprland-git
+hyprpicker-git
+hyprpaper
+waybar-hyprland-git
+hyprland
 i3lock
+swaylock
 iana-etc
 icoextract
 icu

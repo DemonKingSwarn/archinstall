@@ -9,7 +9,7 @@ cd /home/$username
 sudo pacman -S paru --noconfirm
 curl -sLo pkgs.txt $packages
 while read p; do
-    sudo pacman -S $p --noconfirm
+    paru -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
 proc_type=$(lscpu)
@@ -36,13 +36,13 @@ mkdir -p .local/lib
 git clone https://github.com/demonkingswarn/dotfiles.git .dots
 cd .dots
 rm ~/.bashrc
-stow --ignore=.git .
+stow --ignore=.git --ignore=PKGBUILD --ignore=README.org .
 
 cd /home/$username
 git clone https://github.com/demonkingswarn/scripts.git .scripts
 
-mkdir -p hdd/pix/
-git clone https://github.com/demonkingswarn/wallpapers.git hdd/pix/wall
+mkdir -p $HOME/pix/
+git clone https://github.com/demonkingswarn/wallpapers.git $HOME/pix/wall
 
 cd /home/$username/.config
 sudo cp env /etc/zsh/zshenv

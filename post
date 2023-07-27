@@ -30,12 +30,6 @@ echo "permit nopass $username as root" > /etc/doas.conf
 ln -s $(which doas) /bin/sudo
 ln -s $(which dash) /bin/sh
 
-printf "%s\n" "Adding demonos repo"
-
-echo "[dystopia]" >> /etc/pacman.conf
-echo "SigLevel = Optional TrustAll" >> /etc/pacman.conf
-echo "Server = https://github.com/DemonKingSwarn/\$repo/raw/master/\$arch" >> /etc/pacman.conf
-
 echo "[multilib]" >> /etc/pacman.conf
 echo "Include = /etc/pacman.d/mirrorlist" >> /etc/pacman.conf
 
@@ -49,11 +43,7 @@ printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
 mount /dev/$bootDrive /boot/EFI
 echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
 
-if [ ! -d "/sys/firmware/efi" ]; then
-    grub-install --boot-directory=/boot --force /dev/$bootDrive
-else
-    grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
-fi
+grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable NetworkManager

@@ -6,40 +6,18 @@ cd /home/$username
 
 packages="https://github.com/DemonKingSwarn/archinstall/raw/master/pkgs.txt"
 cd /home/$username
+sudo pacman -S paru --noconfirm
 curl -sLo pkgs.txt $packages
 while read p; do
     sudo pacman -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
 proc_type=$(lscpu)
-intel_proc=$(echo "${proc_type}" | grep -E "GenuineIntel")
-amd_proc=$(echo "${proc_type}" | grep -E "AuthenticAMD")
-if [ ${intel_proc} ] ; then
-    echo "Installing Intel Microcode"
-    sudo pacman -S --noconfirm --needed intel-ucode
-    proc_ucode=intel-ucode.img
-elif [ ${amd_proc} ] ; then
-    echo "Installing AMD Microcode"
-    sudo pacman -S --noconfirm --needed amd-ucode
-    proc_ucode=amd-ucode.img
-fi
+sudo pacman -S --noconfirm --needed intel-ucode
+proc_ucode=intel-ucode.img
 
-gpu_type=$(lspci)
-nvidia_gpu=$(echo "$gpu_type" | grep -E "NVIDIA|GeForce")
-amd_gpu=$(lspci | grep 'VGA' | grep -E "Radeon|AMD")
-integrated_gpu=$(echo $gpu_type | grep -E "Integrated Graphics Controller")
-intel_gpu=$(echo $gpu_type | grep -E "Intel Corporation UHD")
-if [ $nvidia_gpu ] ; then
-    sudo pacman -S --noconfirm --needed nvidia-open nvidia-prime nvidia-settings nvidia-utils
-    nvidia-xconfig
-elif [ $amd_gpu ] ; then
-    sudo pacman -S --noconfirm --needed xf86-video-amdgpu
-elif [  $integrated_gpu ] ; then
-    sudo pacman -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
-elif [ $intel_gpu ] ; then
-    sudo pacman -S --noconfirm --needed libva-intel-driver libvdpau-va-gl lib32-vulkan-intel vulkan-intel libva-intel-driver libva-utils lib32-mesa
-fi
-
+sudo pacman -S --noconfirm --needed nvidia-open nvidia-prime nvidia-settings nvidia-utils
+nvidia-xconfig
 
 echo "Installing advanced cp and mv"
 git clone https://github.com/jarun/advcpmv

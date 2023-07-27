@@ -210,7 +210,6 @@ iproute2
 iptables-nft
 iputils
 iso-codes
-jack2
 jansson
 jasper
 java-runtime-common
@@ -703,6 +702,9 @@ perl-www-robotrules
 picom-jonaburg-git
 pinentry
 pipewire
+pipewire-alsa
+pipewire-jack
+pipewire-pulse
 pixman
 pkgconf
 pod2man
@@ -720,7 +722,6 @@ procps-ng
 protobuf
 protontricks
 psmisc
-pulseaudio
 pulsemixer
 python
 python-appdirs
@@ -872,7 +873,6 @@ vim-runtime
 vimv-git
 vkd3d
 vkd3d-proton-bin
-vktablet
 vmaf
 volume_key
 vulkan-headers

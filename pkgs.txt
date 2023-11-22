@@ -1,5 +1,6 @@
 alsa-utils
 alsa-card-profiles
+bspwm
 wayland
 qt6-wayland
 qt5-wayland
@@ -18,6 +19,7 @@ dunst
 mako
 eza
 ffmpeg
+feh
 ffmpegthumbnailer
 firefox
 neovim

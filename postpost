@@ -43,10 +43,10 @@ git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting
 git clone --depth 1 https://github.com/Aloxaf/fzf-tab
 
 cd /home/$username
-git clone https://github.com/demonkingswarn/scripts.git .scripts
+git clone --depth 1 https://github.com/demonkingswarn/scripts.git .scripts
 
 mkdir -p $HOME/pix/
-git clone https://github.com/demonkingswarn/wallpapers.git $HOME/pix/wall
+git clone --depth 1 https://github.com/demonkingswarn/wallpapers.git $HOME/pix/wall
 
 cd /home/$username/.config
 sudo cp env /etc/zsh/zshenv

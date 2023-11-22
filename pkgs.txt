@@ -8,10 +8,12 @@ xorg-xwininfo
 xorg-xinit
 polkit
 polkit-gnome
+power-profiles-daemon
 lf-sixel-git
 bc
 xorg-xprop
 libnotify
+libsixel
 dunst
 mako
 eza
@@ -28,6 +30,8 @@ pipewire
 pipewire-pulse
 pipewire-alsa
 pipewire-jack
+rofi-file-browser-extended-git
+rofi-lbonn-wayland
 unzip
 fzf
 bat

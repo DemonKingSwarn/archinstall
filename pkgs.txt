@@ -1,3 +1,5 @@
+alsa-utils
+alsa-card-profiles
 wayland
 qt6-wayland
 qt5-wayland

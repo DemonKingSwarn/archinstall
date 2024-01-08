@@ -1,11 +1,44 @@
 #!/bin/sh
 
+pacman -S fzf
+
 sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownloads = 10\nILoveCandy/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' -i /etc/pacman.conf
 
 timedatectl set-ntp true
 
 lsblk
-printf "Enter the drive you have just partitioned for boot (just the name, ex: sda1) : " && read bootDrive
+
+printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
+
+fdisk /dev/$drive <<-EOF
+m
+g
+n
+
+
+
++550M
+n
+
+
+
++2G
+n
+
+
+
+
+t
+1
+1
+t
+2
+19
+w
+EOF
+
+lsblk
+printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive
 printf "Enter the swap partition (just the name, ex: sda2) : " && read swapDrive
 printf "Enter the big CHONKY partition (just the name, ex: sda3 ) : " && read linuxDrive
 mkfs.fat -F32 /dev/$bootDrive

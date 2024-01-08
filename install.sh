@@ -1,7 +1,5 @@
 #!/bin/sh
 
-pacman -S fzf
-
 sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownloads = 10\nILoveCandy/' -e 's/#Color/Color/' -e 's/#VerbosePkgLists/VerbosePkgLists/' -i /etc/pacman.conf
 
 timedatectl set-ntp true

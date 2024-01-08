@@ -4,9 +4,9 @@ sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownlo
 
 timedatectl set-ntp true
 
-lsblk
+#lsblk
 
-printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
+#printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
 
 #echo m\ng\nn\n\n\n\n+550M\nn\n\n\n\n+2G\nn\n\n\n\n\nt\n1\n1\nt\n2\n19\nw | fdisk /dev/$drive
 

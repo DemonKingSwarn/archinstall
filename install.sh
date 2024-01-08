@@ -8,7 +8,7 @@ lsblk
 
 printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
 
-echo m\ng\nn\n\n\n\n+550M\nn\n\n\n\n+2G\nn\n\n\n\n\nt\n1\n1\nt\n2\n19\nw | fdisk /dev/$drive
+#echo m\ng\nn\n\n\n\n+550M\nn\n\n\n\n+2G\nn\n\n\n\n\nt\n1\n1\nt\n2\n19\nw | fdisk /dev/$drive
 
 lsblk
 printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive

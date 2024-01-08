@@ -6,33 +6,7 @@ timedatectl set-ntp true
 
 #lsblk
 
-printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
 
-fdisk /dev/$drive <<-EOF
-m
-g
-n
-^M
-^M
-^M
-+550M
-n
-^M
-^M
-^M
-+2G
-n
-^M
-^M
-^M
-^M
-t
-1
-1
-2
-19
-w
-EOF
 
 
 lsblk

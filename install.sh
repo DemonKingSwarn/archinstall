@@ -8,32 +8,32 @@ lsblk
 
 printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
 
-fdisk /dev/$drive <<-EOF
-m
-g
-n
-\n
-\n
-\n
-+550M
-n
-\n
-\n
-\n
-+2G
-n
-\n
-\n
-\n
-\n
-t
-1
-1
-t
-2
-19
-w
-EOF
+(
+echo m
+echo g
+echo n
+echo 
+echo 
+echo
+echo +550M
+echo n
+echo
+echo
+echo
+echo +2G
+echo n
+echo
+echo
+echo
+echo
+echo t
+echo 1
+echo 1
+echo t
+echo 2
+echo 19
+echo w
+) | fdisk /dev/$drive
 
 lsblk
 printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive

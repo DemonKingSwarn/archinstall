@@ -6,9 +6,34 @@ timedatectl set-ntp true
 
 #lsblk
 
-#printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
+printf "Enter the drive you want to partition (just the name, ex: sda1) : " && read drive
 
-#echo m\ng\nn\n\n\n\n+550M\nn\n\n\n\n+2G\nn\n\n\n\n\nt\n1\n1\nt\n2\n19\nw | fdisk /dev/$drive
+fdisk /dev/$drive <<-EOF
+m
+g
+n
+^M
+^M
+^M
++550M
+n
+^M
+^M
+^M
++2G
+n
+^M
+^M
+^M
+^M
+t
+1
+1
+2
+19
+w
+EOF
+
 
 lsblk
 printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive

@@ -53,6 +53,7 @@ case $bootloader in
         echo "linux /boot/vmlinuz-linux" >> /boot/loader/entries/arch.conf
         echo "initrd    /boot/initramfs-linux.img" >> /boot/loader/entries/arch.conf
         echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
+        pacman -S linux
         ;;
     2)
         pacman -S grub

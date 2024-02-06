@@ -38,20 +38,20 @@ pacman -S networkmanager efibootmgr dosfstools os-prober mtools --noconfirm
 
 lsblk
 printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
+lsblk
+printf "Enter the main partion: (ex: sda3) " && linuxPart
 
 printf "Select the bootloader you want:\n1. systemd-boot\n2. grub\n: " && read bootloader
 
 case $bootloader in
     1)
         mount /dev/$bootDrive /boot
-        lsblk
-        printf "Enter the main partion: (ex: sda3) " && linuxPart
         bootctl --path=/boot install
         echo "timeout 3" > /boot/loader/loader.conf
         echo "default arch-*" >> /boot/loader/loader.conf
         echo "title $hostname" > /boot/loader/entries/arch.conf
-        echo "linux /boot/vmlinuz-linux" >> /boot/loader/entries/arch.conf
-        echo "initrd    /boot/initramfs-linux.img" >> /boot/loader/entries/arch.conf
+        echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+        echo "initrd    /initramfs-linux.img" >> /boot/loader/entries/arch.conf
         echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
         pacman -S linux
         ;;

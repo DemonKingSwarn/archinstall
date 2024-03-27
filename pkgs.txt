@@ -1,3 +1,4 @@
+sddm
 alsa-utils
 alsa-card-profiles
 bspwm
@@ -47,3 +48,4 @@ yt-dlp
 zip
 zathura
 zathura-pdf-mupdf
+mesa

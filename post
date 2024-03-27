@@ -45,7 +45,9 @@ printf "Select the bootloader you want:\n1. systemd-boot\n2. grub\n: " && read b
 
 case $bootloader in
     1)
+        rm -rf /boot/*
         mount /dev/$bootDrive /boot
+        pacman -S linux linux-headers
         bootctl --path=/boot install
         echo "timeout 3" > /boot/loader/loader.conf
         echo "default arch-*" >> /boot/loader/loader.conf
@@ -53,7 +55,6 @@ case $bootloader in
         echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
         echo "initrd    /initramfs-linux.img" >> /boot/loader/entries/arch.conf
         echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
-        pacman -S linux
         ;;
     2)
         pacman -S grub

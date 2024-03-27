@@ -4,11 +4,6 @@ sed -e 's/CheckSpace/#CheckSpace/' -e 's/#ParallelDownloads\ =\ 5/ParallelDownlo
 
 timedatectl set-ntp true
 
-#lsblk
-
-
-
-
 lsblk
 printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive
 printf "Enter the swap partition (just the name, ex: sda2) : " && read swapDrive

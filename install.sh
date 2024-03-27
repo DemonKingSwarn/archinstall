@@ -16,7 +16,7 @@ mkfs.ext4 /dev/$linuxDrive
 mount /dev/$linuxDrive /mnt
 
 echo "Installing the base packages"
-pacstrap /mnt base linux linux-firmware
+pacstrap /mnt base
 
 echo "Generating the filesystem table"
 genfstab -U /mnt >> /mnt/etc/fstab

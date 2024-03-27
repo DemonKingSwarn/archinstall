@@ -39,7 +39,7 @@ pacman -S networkmanager efibootmgr dosfstools os-prober mtools --noconfirm
 lsblk
 printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
 lsblk
-printf "Enter the main partion: (ex: sda3) " && linuxPart
+printf "Enter the main partion: (ex: sda3) " && read linuxPart
 
 printf "Select the bootloader you want:\n1. systemd-boot\n2. grub\n: " && read bootloader
 

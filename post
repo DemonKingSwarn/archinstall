@@ -28,6 +28,7 @@ usermod -aG wheel,audio,video,optical,storage $username
 pacman -S opendoas which dash --noconfirm
 echo "permit persist $username as root" > /etc/doas.conf
 ln -s $(which doas) /bin/sudo
+rm -rf /bin/sh
 ln -s $(which dash) /bin/sh
 
 echo "[multilib]" >> /etc/pacman.conf
@@ -41,34 +42,16 @@ printf "Enter the boot partition (only name, ex: sda1) : " && read bootDrive
 lsblk
 printf "Enter the main partion: (ex: sda3) " && read linuxPart
 
-printf "Select the bootloader you want:\n1. systemd-boot\n2. grub\n: " && read bootloader
-
-case $bootloader in
-    1)
-        rm -rf /boot/*
-        mount /dev/$bootDrive /boot
-        pacman -S linux linux-headers
-        bootctl --path=/boot install
-        echo "timeout 3" > /boot/loader/loader.conf
-        echo "default arch-*" >> /boot/loader/loader.conf
-        echo "title $hostname" > /boot/loader/entries/arch.conf
-        echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
-        echo "initrd    /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-        echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
-        ;;
-    2)
-        pacman -S grub
-        mkdir /boot/EFI
-        mount /dev/$bootDrive /boot/EFI
-        echo "GRUB_DISABLE_OS_PROBER=false" >> /etc/default/grub
-        grub-install --target=x86_64-efi --bootloader-id=grub_uefi --recheck
-        grub-mkconfig -o /boot/grub/grub.cfg
-        ;;
-
-    *)
-        printf "Nothing selected\n"
-        exit 1
-esac
+rm -rf /boot/*
+mount /dev/$bootDrive /boot
+pacman -S linux linux-headers
+bootctl --path=/boot install
+echo "timeout 3" > /boot/loader/loader.conf
+echo "default arch-*" >> /boot/loader/loader.conf
+echo "title $hostname" > /boot/loader/entries/arch.conf
+echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
+echo "initrd    /initramfs-linux.img" >> /boot/loader/entries/arch.conf
+echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
 
 systemctl enable NetworkManager
 systemctl start NetworkManager

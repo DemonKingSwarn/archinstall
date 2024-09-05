@@ -6,11 +6,8 @@ timedatectl set-ntp true
 
 lsblk
 printf "Enter the drive which has 550M partition space (just the name, ex: sda1) : " && read bootDrive
-printf "Enter the swap partition (just the name, ex: sda2) : " && read swapDrive
-printf "Enter the big CHONKY partition (just the name, ex: sda3 ) : " && read linuxDrive
+printf "Enter the big CHONKY partition (just the name, ex: sda2 ) : " && read linuxDrive
 mkfs.fat -F32 /dev/$bootDrive
-mkswap /dev/$swapDrive
-swapon /dev/$swapDrive
 mkfs.ext4 /dev/$linuxDrive
 
 mount /dev/$linuxDrive /mnt

@@ -14,6 +14,13 @@ echo "127.0.0.1     localhost" >> /etc/hosts
 echo "::1           localhost" >> /etc/hosts
 echo "127.0.1.1     $hostname.localdomain   $hostname" >> /etc/hosts
 
+echo "Setting up Swap"
+dd if=/dev/zero of=/swapfile bs=4M count=4294967296
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+echo "/swapfile swap    swap    defaults    0   0" >> /etc/fstab
+
 echo "Set the root password"
 passwd
 
@@ -51,7 +58,7 @@ echo "default arch-*" >> /boot/loader/loader.conf
 echo "title $hostname" > /boot/loader/entries/arch.conf
 echo "linux /vmlinuz-linux" >> /boot/loader/entries/arch.conf
 echo "initrd    /initramfs-linux.img" >> /boot/loader/entries/arch.conf
-echo "options   root=/dev/$linuxPart rw" >> /boot/loader/entries/arch.conf
+echo "options   root=/dev/$linuxPart rw quiet splash" >> /boot/loader/entries/arch.conf
 
 systemctl enable NetworkManager
 systemctl start NetworkManager

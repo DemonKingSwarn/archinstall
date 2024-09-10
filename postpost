@@ -12,7 +12,6 @@ while read p; do
     paru -S $p --noconfirm
 done < /home/$username/pkgs.txt
 
-proc_type=$(lscpu)
 sudo pacman -S --noconfirm --needed intel-ucode
 proc_ucode=intel-ucode.img
 

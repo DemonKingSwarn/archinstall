@@ -1,6 +1,11 @@
+alsa-card-profiles
+alsa-lib
+alsa-plugins
+alsa-utils
 anyrun-git
 bat
 blender
+cava
 duf
 dunst
 eza
@@ -17,6 +22,9 @@ hyprlock
 hyprpicker-git
 imagemagick
 kitty
+lib32-alsa-libs
+lib32-alsa-plugins
+lib32-pipewire
 man-db
 mission-center
 mpv

@@ -15,7 +15,7 @@ echo "::1           localhost" >> /etc/hosts
 echo "127.0.1.1     $hostname.localdomain   $hostname" >> /etc/hosts
 
 echo "Setting up Swap"
-dd if=/dev/zero of=/swapfile bs=4M count=4294967296
+fallocate -l 4G /swapfile
 chmod 600 /swapfile
 mkswap /swapfile
 swapon /swapfile

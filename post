@@ -14,12 +14,19 @@ echo "127.0.0.1     localhost" >> /etc/hosts
 echo "::1           localhost" >> /etc/hosts
 echo "127.0.1.1     $hostname.localdomain   $hostname" >> /etc/hosts
 
-echo "Setting up Swap"
-fallocate -l 4G /swapfile
-chmod 600 /swapfile
-mkswap /swapfile
-swapon /swapfile
-echo "/swapfile swap    swap    defaults    0   0" >> /etc/fstab
+#echo "Setting up Swap"
+#fallocate -l 4G /swapfile
+#chmod 600 /swapfile
+#mkswap /swapfile
+#swapon /swapfile
+#echo "/swapfile swap    swap    defaults    0   0" >> /etc/fstab
+
+echo "Setting up zram swap"
+modprobe zram
+zramctl /dev/zram0 --algorithm zstd --size "$(($(grep -Po 'MemTotal:\s*\K\d+' /proc/meminfo)/2))KiB"
+mkswap -U clear /dev/zram0
+swapon --discard --priority 100 /dev/zram0
+echo "/dev/zram0  none  swap  defaults,discard,pri=100  0 0" >> /etc/fstab
 
 echo "Set the root password"
 passwd

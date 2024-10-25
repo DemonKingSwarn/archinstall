@@ -8,6 +8,7 @@ blender
 cava
 duf
 dunst
+demonos-core-fonts
 eza
 ffmpeg
 ffmpegthumbnailer
@@ -25,13 +26,15 @@ kitty
 lib32-alsa-libs
 lib32-alsa-plugins
 lib32-pipewire
+ly
 man-db
 mission-center
 mpv
 neovim
 newsboat
-nsxiv
+nsxiv-demon
 ntfs-3g
+noise-suppression-for-voice
 pipewire
 pipewire-alsa
 pipewire-jack
@@ -39,8 +42,8 @@ pipewire-pulse
 polkit
 polkit-gnome
 pulsemixer
-rofi-lbonn-wayland
-sddm
+rofi-wayland
+rnnoise
 slurp
 socat
 svt-av1
@@ -50,9 +53,9 @@ thunar
 unzip
 vscodium
 waybar
+wine
 wireplumber
 wl-clipboard
-xclip
 xorg-xwayland
 yt-dlp
 zathura

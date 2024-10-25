@@ -47,6 +47,15 @@ git clone --depth 1 https://github.com/demonkingswarn/scripts.git .scripts
 mkdir -p $HOME/pix/
 git clone --depth 1 https://github.com/demonkingswarn/wallpapers.git $HOME/pix/wall
 
+cd $HOME/
+mkdir -p dl/gitthings dox vids musics
+cd dl/gitthings
+git clone --depth 1 https://github.com/DemonKingSwarn/rofi-file-browser-extended
+cd rofi-file-browser-extended
+cmake .
+make
+sudo make install
+
 cd /home/$username/.config
 sudo cp env /etc/zsh/zshenv
 

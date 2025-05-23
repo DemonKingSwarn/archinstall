@@ -7,12 +7,12 @@ hwclock --systohc
 echo "en_IN.UTF-8 UTF-8" >> /etc/locale.gen
 locale-gen
 
-printf "Enter the hostname: " && read hostname
+printf "Enter the hostname: " && read hostname || hostname="demonos"
 echo "$hostname" > /etc/hostname
 
 echo "127.0.0.1     localhost" >> /etc/hosts
 echo "::1           localhost" >> /etc/hosts
-echo "127.0.1.1     $hostname.localdomain   $hostname" >> /etc/hosts
+echo "127.0.1.1     $hostname.local   $hostname" >> /etc/hosts
 
 echo "Setting up Swap"
 fallocate -l 4G /swapfile

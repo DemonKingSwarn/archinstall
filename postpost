@@ -1,67 +1,78 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
-username=$(whoami)
+# create log file
+logfile="$HOME/install.log"
+mkfifo "$logfile.pipe"
+tee -a "$logfile" < "$logfile.pipe" &
+exec > "$logfile.pipe" 2>&1
+trap 'rm -f "$logfile.pipe"' EXIT
 
-cd /home/$username
 
-packages="https://github.com/DemonKingSwarn/archinstall/raw/master/pkgs.txt"
-cd /home/$username
-sudo pacman -S paru --noconfirm
-curl -sLo pkgs.txt $packages
-while read p; do
-    paru -S $p --noconfirm
-done < /home/$username/pkgs.txt
+cat <<- 'EOF'
+ ____  _____ __  __  ___  _   _  ___  ____  
+|  _ \| ____|  \/  |/ _ \| \ | |/ _ \/ ___| 
+| | | |  _| | |\/| | | | |  \| | | | \___ \ 
+| |_| | |___| |  | | |_| | |\  | |_| |___) |
+|____/|_____|_|  |_|\___/|_| \_|\___/|____/ 
 
-sudo pacman -S --noconfirm --needed intel-ucode
-proc_ucode=intel-ucode.img
+     an Arch Linux meta-distribution
+EOF
 
-sudo pacman -S --noconfirm --needed nvidia-open nvidia-prime nvidia-settings nvidia-utils
+ARCH="$(uname -m)"
+GITHUB="https://github.com/demonkingswarn"
+WALLPAPER_DIR="${XDG_PICTURE_HOME:-$HOME/pix}"
+CPG_BIN="https://github.com/DemonKingSwarn/dotfiles/releases/download/0.0.1/cpg"
+MVG_BIN="https://github.com/DemonKingSwarn/dotfiles/releases/download/0.0.1/mvg"
+AUR_HELPER="paru"
 
-echo "Installing advanced cp and mv"
-git clone https://github.com/jarun/advcpmv
-cd ./advcpmv
-sh ./install.sh
-sudo mv ./advcp /usr/local/bin/cpg
-sudo mv ./advmv /usr/local/bin/mvg
+PKGS="opendoas fastfetch dash git zoxide starship stow zsh fzf river wideriver pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber hyprlock swww nsxiv-demon waybar swaync wezterm ghostty brave-bin floorp thunar grim slurp swappy brightnessctl playerctl rofi-wayland rofi-file-browser-extended-patched power-profiles-daemon pavucontrol blueman galculator gammastep pamixer pulsemixer ly polkit-gnome network-manager-applet udiskie xwayland-satellite copyq xdg-desktop-portal xdg-desktop-portal-hyprland wine dxvk-bin vkd3d-proton-bin proton-ge-custom rm-improved-bin aria2 wget duf gdu cyme steam heroic-games-launcher-bin gamescope hyprpicker"
 
-cd /home/$username
-mkdir .config
-mkdir -p .local/bin
-mkdir -p .local/share
-mkdir -p .local/state/zsh
-touch .local/state/zsh/history
-mkdir -p .local/lib
-git clone https://github.com/demonkingswarn/dotfiles.git .dots
-cd .dots
-rm ~/.bashrc
-stow --ignore=.git --ignore=README.md --ignore=pkgs.txt --ignore=README.org .
+mkdir -p "$HOME/.local/bin" && mkdir -p "$HOME/.cache/zsh" && mkdir -p "$HOME/.proton"
+test "$HOME/.cache/zsh/history" || touch "$HOME/.cache/zsh/history"
+test -d "$WALLPAPER_DIR" || mkdir -p "$WALLPAPER_DIR"
 
-cd /home/$username
-mkdir -p .local/share/zsh/plugins && cd .local/share/zsh/plugins
-git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting
-git clone --depth 1 https://github.com/Aloxaf/fzf-tab
+echo "[*] Installing packages..."
+$AUR_HELPER -S $PKGS --noconfirm
 
-cd /home/$username
-git clone --depth 1 https://github.com/demonkingswarn/scripts.git .scripts
+git clone --quiet --depth 1 "$GITHUB/dotfiles" $HOME/.dots
+git clone --quiet --depth 1 "$GITHUB/scripts" $HOME/.scripts
+git clone --quiet --depth 1 "$GITHUB/fonts" $HOME/.local/share/
+git clone --quiet --depth 1 "$GITHUB/wallpapers" $WALLPAPER_DIR/wall
 
-mkdir -p $HOME/pix/
-git clone --depth 1 https://github.com/demonkingswarn/wallpapers.git $HOME/pix/wall
+fc-cache -vf
 
-cd $HOME/
-mkdir -p dl/gitthings dox vids musics
-cd dl/gitthings
-git clone --depth 1 https://github.com/DemonKingSwarn/rofi-file-browser-extended
-cd rofi-file-browser-extended
-cmake .
-make
-sudo make install
+git clone --depth 1 "$GITHUB/nvim" $HOME/.config/nvim
 
-cd /home/$username/.config
-sudo cp env /etc/zsh/zshenv
+cd "$HOME/.dots"
+stow --ignore="screenshot.png" --ignore="README.org" --ignore=".git" --ignore=".assets" .
+
+sudo cp $HOME/.config/env /etc/zsh/zshenv
 
 chsh -s $(which zsh)
 
-echo "run 'exit'"
-echo "run 'exit'"
-echo "run 'umount -l /mnt'"
-echo "run 'reboot'"
+sudo ln -sf $(which dash) /bin/sh
+
+if [ "$ARCH" = "x86_64" ]; then
+  cd "$HOME"
+  wget "$CPG_BIN"
+  wget "$MVG_BIN"
+  chmod +x cpg mvg
+
+  sudo mv cpg /usr/local/bin
+  sudo mv mvg /usr/local/bin
+fi
+
+gpu_type=$(lspci)
+
+echo "$gpu_type" | grep -qE "NVIDIA|GeForce"
+if [ $? -eq 0 ]; then
+  $AUR_HELPER -S --noconfirm --needed nvidia-open-dkms opencl-nvidia nvidia-utils nvidia-prime nvidia-container-toolkit libvdpau nvtop libnvidia-container libva-nvidia-driver lib32-libvdpau lib32-nvidia-utils lib32-opencl-nvidia
+fi
+
+cpu_vendor=$(grep 'vendor_id' /proc/cpuinfo | head -n1 | cut -d':' -f2 | sed 's/ //g')
+
+if [ "$cpu_vendor" = "GenuineIntel" ]; then
+  $AUR_HELPER -S --noconfirm --needed vulkan-intel libva-intel-driver intel-ucode lib32-vulkan-intel intel-media-driver mesa lib32-mesa mesa-utils lib32-mesa-utils
+else
+  $AUR_HELPER -S --noconfirm --needed mesa lib32-mesa mesa-utils lib32-mesa-utils
+fi

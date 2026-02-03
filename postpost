@@ -25,14 +25,17 @@ CPG_BIN="https://github.com/DemonKingSwarn/dotfiles/releases/download/0.0.1/cpg"
 MVG_BIN="https://github.com/DemonKingSwarn/dotfiles/releases/download/0.0.1/mvg"
 AUR_HELPER="paru"
 
-PKGS="opendoas fastfetch dash git zoxide eza bat wl-clipboard xclip debugedit starship stow zsh fzf river wideriver pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber hyprlock swww nsxiv-demon waybar swaync wezterm ghostty brave-bin floorp thunar grim slurp swappy brightnessctl playerctl rofi-wayland rofi-file-browser-extended-patched power-profiles-daemon pavucontrol blueman galculator gammastep pamixer pulsemixer ly polkit-gnome network-manager-applet udiskie xwayland-satellite copyq xdg-desktop-portal xdg-desktop-portal-hyprland wine dxvk-bin vkd3d-proton-bin proton-ge-custom rm-improved-bin aria2 wget duf gdu cyme steam heroic-games-launcher-bin gamescope hyprpicker"
+#PKGS="opendoas fastfetch dash git zoxide eza bat wl-clipboard xclip debugedit starship stow zsh fzf river wideriver pipewire pipewire-pulse pipewire-alsa pipewire-jack wireplumber hyprlock swww nsxiv-demon waybar swaync wezterm ghostty brave-bin floorp thunar grim slurp swappy brightnessctl playerctl rofi-wayland rofi-file-browser-extended-patched power-profiles-daemon pavucontrol blueman galculator gammastep pamixer pulsemixer ly polkit-gnome network-manager-applet udiskie xwayland-satellite copyq xdg-desktop-portal xdg-desktop-portal-hyprland wine dxvk-bin vkd3d-proton-bin proton-ge-custom rm-improved-bin aria2 wget duf gdu cyme steam heroic-games-launcher-bin gamescope hyprpicker"
+
+echo "[*] Installing packages..."
+while read -r pkg; do
+  $AUR_HELPER --noconfirm --needed -S $pkg
+done < ./packages.txt
 
 mkdir -p "$HOME/.local/bin" && mkdir -p "$HOME/.cache/zsh" && mkdir -p "$HOME/.proton"
 test "$HOME/.cache/zsh/history" || touch "$HOME/.cache/zsh/history"
 test -d "$WALLPAPER_DIR" || mkdir -p "$WALLPAPER_DIR"
 
-echo "[*] Installing packages..."
-$AUR_HELPER -S $PKGS --noconfirm
 
 git clone --quiet --depth 1 "$GITHUB/dotfiles" $HOME/.dots
 git clone --quiet --depth 1 "$GITHUB/scripts" $HOME/.scripts
